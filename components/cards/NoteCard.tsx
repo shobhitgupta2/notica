@@ -55,7 +55,7 @@ export const NoteCard = ({
 
   return (
     <>
-      <Card className="min-w-80 max-w-80">
+      <Card className="w-full max-w-80">
         <CardHeader>
           <CardTitle className="flex flex-row justify-between text-xl ">
             <div className="truncate pr-4">{title}</div>

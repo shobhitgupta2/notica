@@ -30,7 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={geistSans.className} suppressHydrationWarning>
-      <body className="bg-background text-foreground w-screen h-screen flex flex-col overflow-hidden">
+      <body className="bg-background text-foreground w-full h-screen flex flex-col overflow-x-hidden overflow-y-auto">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -44,7 +44,7 @@ export default function RootLayout({
               <HeaderAuth />
             </div>
           </nav>
-          <main className="w-screen flex-1 overflow-auto">
+          <main className="w-full flex-1 overflow-hidden">
             <div className="w-full h-full flex justify-center items-center">
               <TanstackProvider>
                 <StateProvider>{children}</StateProvider>
@@ -52,7 +52,7 @@ export default function RootLayout({
               </TanstackProvider>
             </div>
           </main>
-          <footer className="w-full flex items-center justify-center border-t text-center text-xs py-4">
+          <footer className="w-full flex items-center justify-center border-t text-center text-xs py-3">
             <p>Made by Shobhit Gupta © 2025</p>
           </footer>
         </ThemeProvider>

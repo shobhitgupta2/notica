@@ -8,7 +8,6 @@ import { apiClient } from "@/utils/api-client";
 import { useSortState } from "@/hooks/sort";
 import { useFilterState } from "@/hooks/filter";
 import { filter, sort } from "@/types/types";
-import PageContainer from "@/components/containers/PageContainer";
 
 export default function HomePage() {
   const { data, isLoading } = useQuery({
@@ -32,7 +31,7 @@ export default function HomePage() {
   return (
     <>
       {!isLoading ? (
-        <div className="w-screen h-full flex flex-col">
+        <div className="w-full h-full flex flex-col">
           <CustomContainer />
           <NotesContainer>
             {filteredNotes.length > 0 ? (
@@ -48,11 +47,7 @@ export default function HomePage() {
                 />
               ))
             ) : (
-              <PageContainer>
-                <span className="text-3xl text-foreground">
-                  No notes yet...
-                </span>
-              </PageContainer>
+              <span className="text-3xl text-foreground">No notes yet...</span>
             )}
           </NotesContainer>
         </div>

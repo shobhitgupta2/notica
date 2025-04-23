@@ -8,16 +8,13 @@ export const GlowButton = ({
   className?: string;
 }) => {
   return (
-    <div className="relative group">
-      <div className="absolute -inset-0.5 bg-orange-600 rounded-[0.75rem] blur opacity-80 group-hover:opacity-100 transition duration-300" />
+    <div className="relative group inline-block">
+      <div className="absolute -inset-0.5 bg-orange-600 rounded-lg blur opacity-80 group-hover:opacity-100 transition duration-300" />
       <Button
-        className="relative p-4 h-fit text-2xl text-white rounded-[0.75rem]
-    bg-gradient-to-r from-orange-500 to-orange-800"
-        asChild
+        className="relative px-8 py-6 text-2xl font-semibold bg-gradient-to-r from-orange-400 to-orange-800 text-white rounded-lg shadow-lg h-fit w-full"
+        size="lg"
       >
-        <Link href="/home" className="w-full h-full">
-          {children}
-        </Link>
+        <Link href="/home">{children}</Link>
       </Button>
     </div>
   );
