@@ -13,6 +13,7 @@ export const GlowButton = ({
       <Button
         className="relative px-8 py-6 text-2xl font-semibold bg-gradient-to-r from-orange-400 to-orange-800 text-white rounded-lg shadow-lg h-fit w-full"
         size="lg"
+        asChild
       >
         <Link href="/home">{children}</Link>
       </Button>
