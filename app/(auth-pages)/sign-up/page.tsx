@@ -1,10 +1,10 @@
-import { signUpAction } from "@/app/actions";
-import { FormMessage, Message } from "@/components/form-message";
-import { SubmitButton } from "@/components/submit-button";
+import { signUpAction } from "@/app/auth/actions";
+import { FormMessage, Message } from "@/components/text/form-message";
+import { SubmitButton } from "@/components/buttons/submit-button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
-import { SmtpMessage } from "../smtp-message";
+import GoogleSignInButton from "@/components/buttons/GoogleSignInButton";
 
 export default async function Signup(props: {
   searchParams: Promise<Message>;
@@ -20,7 +20,7 @@ export default async function Signup(props: {
 
   return (
     <>
-      <form className="flex flex-col min-w-64 max-w-64 mx-auto">
+      <form className="flex-1 flex flex-col rounded-lg min-w-96 min-h-72 border-zinc-800 border-2 p-4">
         <h1 className="text-2xl font-medium">Sign up</h1>
         <p className="text-sm text text-foreground">
           Already have an account?{" "}
@@ -42,10 +42,10 @@ export default async function Signup(props: {
           <SubmitButton formAction={signUpAction} pendingText="Signing up...">
             Sign up
           </SubmitButton>
+          <GoogleSignInButton />
           <FormMessage message={searchParams} />
         </div>
       </form>
-      <SmtpMessage />
     </>
   );
 }

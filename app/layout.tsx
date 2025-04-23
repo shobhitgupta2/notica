@@ -1,12 +1,12 @@
-import DeployButton from "@/components/deploy-button";
-import { EnvVarWarning } from "@/components/env-var-warning";
-import HeaderAuth from "@/components/header-auth";
+import HeaderAuth from "@/components/buttons/header-auth";
 import { ThemeSwitcher } from "@/components/theme-switcher";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
 import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
-import Link from "next/link";
-import "./globals.css";
+import "./fonts/globals.css";
+import { NoticaLogo } from "@/components/buttons/NoticaLogo";
+import { TanstackProvider } from "@/providers/tanstack-provider";
+import { Toaster } from "sonner";
+import { StateProvider } from "@/providers/state-provider";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -14,8 +14,8 @@ const defaultUrl = process.env.VERCEL_URL
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "Next.js and Supabase Starter Kit",
-  description: "The fastest way to build apps with Next.js and Supabase",
+  title: "Notica",
+  description: "The best way to take notes",
 };
 
 const geistSans = Geist({
@@ -30,46 +30,31 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={geistSans.className} suppressHydrationWarning>
-      <body className="bg-background text-foreground">
+      <body className="bg-background text-foreground w-screen h-screen flex flex-col overflow-hidden">
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <main className="min-h-screen flex flex-col items-center">
-            <div className="flex-1 w-full flex flex-col gap-20 items-center">
-              <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-                <div className="w-full max-w-5xl flex justify-between items-center p-3 px-5 text-sm">
-                  <div className="flex gap-5 items-center font-semibold">
-                    <Link href={"/"}>Next.js Supabase Starter</Link>
-                    <div className="flex items-center gap-2">
-                      <DeployButton />
-                    </div>
-                  </div>
-                  {!hasEnvVars ? <EnvVarWarning /> : <HeaderAuth />}
-                </div>
-              </nav>
-              <div className="flex flex-col gap-20 max-w-5xl p-5">
-                {children}
-              </div>
-
-              <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
-                <p>
-                  Powered by{" "}
-                  <a
-                    href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-                    target="_blank"
-                    className="font-bold hover:underline"
-                    rel="noreferrer"
-                  >
-                    Supabase
-                  </a>
-                </p>
-                <ThemeSwitcher />
-              </footer>
+          <nav className="w-full flex justify-between items-center border-b border-b-foreground/10 h-16 gap-4 p-4">
+            <NoticaLogo />
+            <div className="h-full flex flex-row gap-2">
+              <ThemeSwitcher />
+              <HeaderAuth />
+            </div>
+          </nav>
+          <main className="w-screen flex-1 overflow-auto">
+            <div className="w-full h-full flex justify-center items-center">
+              <TanstackProvider>
+                <StateProvider>{children}</StateProvider>
+                <Toaster />
+              </TanstackProvider>
             </div>
           </main>
+          <footer className="w-full flex items-center justify-center border-t text-center text-xs py-4">
+            <p>Made by Shobhit Gupta © 2025</p>
+          </footer>
         </ThemeProvider>
       </body>
     </html>

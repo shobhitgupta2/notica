@@ -1,16 +1,18 @@
-import Hero from "@/components/hero";
-import ConnectSupabaseSteps from "@/components/tutorial/connect-supabase-steps";
-import SignUpUserSteps from "@/components/tutorial/sign-up-user-steps";
-import { hasEnvVars } from "@/utils/supabase/check-env-vars";
+import PageContainer from "@/components/containers/PageContainer";
+import { Hero, HeroDescription, HeroTitle } from "@/components/text/Hero";
+import { GlowButton } from "@/components/buttons/GlowButton";
 
 export default async function Home() {
   return (
-    <>
-      <Hero />
-      <main className="flex-1 flex flex-col gap-6 px-4">
-        <h2 className="font-medium text-xl mb-4">Next steps</h2>
-        {hasEnvVars ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-      </main>
-    </>
+    <PageContainer>
+      <div className="w-screen flex flex-col justify-center items-center">
+        <HeroTitle>Wish it, Think it, Note it.</HeroTitle>
+        <HeroDescription>
+          Turn messy thoughts into structured brilliance with AI-driven note
+          intelligence.
+        </HeroDescription>
+      </div>
+      <GlowButton>Start your Journey</GlowButton>
+    </PageContainer>
   );
 }
