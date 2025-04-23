@@ -20,6 +20,7 @@ import { toast } from "sonner";
 export const AddNote = () => {
   const queryClient = useQueryClient();
 
+  const [disabled, setDisabled] = useState(false);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [badge, setBadge] = useState<badge_enum>(badge_enum.gray);
@@ -31,14 +32,20 @@ export const AddNote = () => {
       setTitle("");
       setOpen(false);
       setBadge(badge_enum.gray);
+      setDisabled(false);
 
       await queryClient.invalidateQueries({ queryKey: ["getNotes"] });
       toast.success("Note Added Successfully");
+    },
+    onError: async () => {
+      toast.error("Something went wrong. Please try again.");
+      setDisabled(false);
     },
   });
 
   const handleSubmit = () => {
     if (!title.trim()) return;
+    setDisabled(true);
     mutation.mutate({ title, badge });
   };
 
@@ -66,7 +73,12 @@ export const AddNote = () => {
         <Label>Tag</Label>
         <ColorPicker value={badge} setBadge={setBadge} />
         <DialogFooter>
-          <Button type="submit" variant="outline" onClick={handleSubmit}>
+          <Button
+            type="submit"
+            variant="outline"
+            onClick={handleSubmit}
+            disabled={disabled}
+          >
             Create Note
           </Button>
         </DialogFooter>
