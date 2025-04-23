@@ -47,9 +47,43 @@ export const NoteCard = ({
 
   const mutation = useMutation({
     mutationFn: (data: { id: string }) => apiClient.deleteNote(data.id),
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["getNotes"] });
-      toast.success("Note Deleted");
+
+    onMutate: async (deleteData) => {
+      await queryClient.cancelQueries({ queryKey: ["getNotes"] });
+
+      const previousData = queryClient.getQueryData<{
+        data: any[];
+        error: any;
+      }>(["getNotes"]);
+
+      queryClient.setQueryData<{ data: any[]; error: any }>(
+        ["getNotes"],
+        (old) => {
+          if (!old) return { data: [], error: null };
+
+          return {
+            ...old,
+            data: old.data.filter((note) => note.note_id !== deleteData.id),
+          };
+        },
+      );
+
+      return { previousData };
+    },
+
+    onError: (err, deleteData, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(["getNotes"], context.previousData);
+      }
+      toast.error("Something went wrong. Please try again.");
+    },
+
+    onSuccess: () => {
+      toast.success("Note Deleted Successfully");
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["getNotes"] });
     },
   });
 

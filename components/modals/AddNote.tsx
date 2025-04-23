@@ -28,18 +28,66 @@ export const AddNote = () => {
   const mutation = useMutation({
     mutationFn: (data: { title: string; badge: badge_enum }) =>
       apiClient.addNote(data.title, data.badge),
-    onSuccess: async () => {
+
+    onMutate: async (newNote) => {
       setTitle("");
       setOpen(false);
       setBadge(badge_enum.gray);
-      setDisabled(false);
+      await queryClient.cancelQueries({ queryKey: ["getNotes"] });
 
-      await queryClient.invalidateQueries({ queryKey: ["getNotes"] });
-      toast.success("Note Added Successfully");
+      const previousData = queryClient.getQueryData<{
+        data: any[];
+        error: any;
+      }>(["getNotes"]);
+
+      const now = new Date();
+      const optimisticNote = {
+        note_id: `temp-${Date.now()}`,
+        title: newNote.title,
+        badge: newNote.badge,
+        updated_at: now.toISOString(),
+        days_since_update: 0,
+        formatted_date: `${now.getDate().toString().padStart(2, "0")}/${(
+          now.getMonth() + 1
+        )
+          .toString()
+          .padStart(2, "0")}/${now.getFullYear()}`,
+        formatted_time: `${now.getHours().toString().padStart(2, "0")}:${now
+          .getMinutes()
+          .toString()
+          .padStart(2, "0")}:${now.getSeconds().toString().padStart(2, "0")}`,
+      };
+
+      queryClient.setQueryData<{ data: any[]; error: any }>(
+        ["getNotes"],
+        (old) => {
+          if (!old) return { data: [optimisticNote], error: null };
+
+          return {
+            ...old,
+            data: [optimisticNote, ...(old.data || [])],
+          };
+        },
+      );
+
+      return { previousData };
     },
-    onError: async () => {
+
+    onError: (err, newNote, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData(["getNotes"], context.previousData);
+      }
       toast.error("Something went wrong. Please try again.");
       setDisabled(false);
+    },
+
+    onSuccess: () => {
+      setDisabled(false);
+      toast.success("Note Added Successfully");
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["getNotes"] });
     },
   });
 

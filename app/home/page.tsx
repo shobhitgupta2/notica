@@ -13,6 +13,7 @@ export default function HomePage() {
   const { data, isLoading } = useQuery({
     queryKey: ["getNotes"],
     queryFn: apiClient.getNotes,
+    staleTime: 60000 * 10,
   });
 
   const notes = data?.data || [];
@@ -47,7 +48,12 @@ export default function HomePage() {
                 />
               ))
             ) : (
-              <span className="text-3xl text-foreground">No notes yet...</span>
+              <div className="w-full col-span-full flex justify-center items-center min-h-[50vh]">
+                <div className="text-3xl text-center text-neutral-400">
+                  Uh oh, no notes here. <br />
+                  Add them now!
+                </div>
+              </div>
             )}
           </NotesContainer>
         </div>
