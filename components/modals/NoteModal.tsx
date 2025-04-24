@@ -130,8 +130,8 @@ export const NoteModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={setOpen}>
-      <DialogContent>
-        <DialogHeader className="p-4">
+      <DialogContent className="max-w-3xl w-full overflow-hidden flex flex-col">
+        <DialogHeader className="p-4 shrink-0">
           <DialogTitle>
             <Input
               required
@@ -141,12 +141,14 @@ export const NoteModal = ({
             />
           </DialogTitle>
         </DialogHeader>
-        <Textarea
-          value={text || ""}
-          className="resize-none w-full h-[36rem] overflow-y-auto"
-          onChange={(e) => setText(e.target.value)}
-        />
-        <DialogFooter>
+        <div className="overflow-y-auto flex-1 p-1">
+          <Textarea
+            value={text || ""}
+            className="resize-none w-full h-48 md:h-64 lg:h-80"
+            onChange={(e) => setText(e.target.value)}
+          />
+        </div>
+        <DialogFooter className="mt-2 shrink-0">
           <div className="w-full h-full flex flex-row justify-between">
             <ColorPicker value={badge} setBadge={setBadge} />
             <Button
