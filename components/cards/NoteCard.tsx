@@ -15,7 +15,7 @@ import { PencilIcon } from "@/components/icons/PencilIcon";
 import { NoteModal } from "@/components/modals/NoteModal";
 import { useState } from "react";
 import { badge_enum } from "@/types/types";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/utils/api-client";
 import { toast } from "sonner";
 import {
@@ -24,6 +24,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { SummaryModal } from "@/components/modals/SummaryModal";
 
 interface NoteCardProps {
   title: string;
@@ -44,6 +45,58 @@ export const NoteCard = ({
 }: NoteCardProps) => {
   const queryClient = useQueryClient();
   const [isOpen, setOpen] = useState(false);
+  const [isSummaryOpen, setSummaryOpen] = useState(false);
+  const [noteText, setNoteText] = useState("");
+
+  const { data, refetch } = useQuery({
+    queryKey: ["getText", id],
+    queryFn: () => apiClient.getTextById(id),
+    enabled: false,
+  });
+
+  const handleClick = async () => {
+    try {
+      const result = await refetch();
+
+      let textToSummarize = "";
+
+      if (typeof result.data === "string") {
+        textToSummarize = result.data;
+      } else if (result.data && typeof result.data.text === "string") {
+        textToSummarize = result.data.text;
+      } else if (result.data && typeof result.data.result === "string") {
+        textToSummarize = result.data.result;
+      } else {
+        toast.error("Could not retrieve note content");
+        setSummaryOpen(false);
+        return;
+      }
+
+      if (!textToSummarize.trim()) {
+        toast.error("No content to summarize");
+        setSummaryOpen(false);
+        return;
+      }
+
+      const wordCount = textToSummarize
+        .trim()
+        .split(/\s+/)
+        .filter((word) => word.length > 0).length;
+
+      if (wordCount <= 30) {
+        toast.info("Note is too short to summarize");
+        setSummaryOpen(false);
+        return;
+      }
+
+      setSummaryOpen(true);
+
+      setNoteText(textToSummarize);
+    } catch (error) {
+      toast.error("Failed to retrieve note content");
+      setSummaryOpen(false);
+    }
+  };
 
   const mutation = useMutation({
     mutationFn: (data: { id: string }) => apiClient.deleteNote(data.id),
@@ -113,6 +166,7 @@ export const NoteCard = ({
             <Button
               variant="outline"
               className="p-2 bg-orange-600 hover:bg-orange-700"
+              onClick={handleClick}
             >
               <BrainIcon />
             </Button>
@@ -139,6 +193,12 @@ export const NoteCard = ({
         defaultBadge={badge}
         defaultTitle={title}
         id={id}
+      />
+      <SummaryModal
+        isOpen={isSummaryOpen}
+        onOpenChange={setSummaryOpen}
+        title={title}
+        text={noteText}
       />
     </>
   );
