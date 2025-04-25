@@ -6,22 +6,22 @@ Capture your thoughts effortlessly with Notica, the smart note-taking solution t
 
 ## Key Features
 
-### 1. Intuitive Note Management:
+### 1. 🗂️ Intuitive Note Management:
 - **Seamless Organization:** Create, edit, and organize notes with an intuitive interface designed for productivity
 - **Tag Categorisation:** Apply tags to notes for quick visual categorization and filtering
 - **Time-Based Sorting:** Arrange notes based on most recent or earliest modifications for optimal user experience
 
-### 2. AI-Powered Summarisation:
+### 2. 🧠 AI-Powered Summarisation:
 - **Intelligent Content Distillation:** Transform lengthy notes into concise, readable summaries with AI
 - **One-Click Efficiency:** Generate comprehensive summaries instantly without manual editing or review
 - **Content Comprehension:** Maintain core message integrity while significantly reducing text volume
 
-### 3. User Experience
+### 3. 💻 User Experience
 - **Intuitive Interface:** Navigate effortlessly with a modern, streamlined design optimized for productivity
 - **Interactive Feedback:** Receive system notifications through elegant toast messages
 - **Optimistic Updates:** Experience instant interface responses with behind-the-scenes data synchronization
 
-### 4. Security & Privacy:
+### 4. 🔒 Security & Privacy:
 - **Flexible Authentication Options:** Sign in securely with either traditional email/password or Google Authentication
 - **Identity Verification:** Robust user verification system maintaining security without compromising convenience
 - **Real-Time Data Protection:** Continuous security monitoring and protection for all stored notes
