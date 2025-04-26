@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Card,
   CardContent,
@@ -7,35 +5,26 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { BrainIcon } from "@/components/icons/BrainIcon";
-import { TrashCanIcon } from "@/components/icons/TrashCanIcon";
+import { NoteCardProps } from "@/types/types";
 import { ColorTag } from "@/components/icons/ColorTag";
-import { PencilIcon } from "@/components/icons/PencilIcon";
-import { NoteModal } from "@/components/modals/NoteModal";
-import { useState } from "react";
-import { badge_enum } from "@/types/types";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "@/utils/api-client";
-import { toast } from "sonner";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import { BrainIcon } from "@/components/icons/BrainIcon";
+import { PencilIcon } from "@/components/icons/PencilIcon";
+import { TrashCanIcon } from "@/components/icons/TrashCanIcon";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
+import { apiClient } from "@/utils/api-client";
+import { toast } from "sonner";
+import { NoteModal } from "@/components/modals/NoteModal";
 import { SummaryModal } from "@/components/modals/SummaryModal";
 
-interface NoteCardProps {
-  title: string;
-  badge: badge_enum;
-  id: string;
-  days: number;
-  formatted_date: string;
-  formatted_time: string;
-}
-
-export const NoteCard = ({
+export const NoteListCard = ({
   title,
   badge,
   id,
@@ -54,7 +43,7 @@ export const NoteCard = ({
     enabled: false,
   });
 
-  const handleClick = async () => {
+  const handleSummariseClick = async () => {
     try {
       const result = await refetch();
 
@@ -98,7 +87,7 @@ export const NoteCard = ({
     }
   };
 
-  const mutation = useMutation({
+  const deleteMutation = useMutation({
     mutationFn: (data: { id: string }) => apiClient.deleteNote(data.id),
 
     onMutate: async (deleteData) => {
@@ -142,11 +131,13 @@ export const NoteCard = ({
 
   return (
     <>
-      <Card className="w-full max-w-80">
+      <Card className="w-3/5">
         <CardHeader>
-          <CardTitle className="flex flex-row justify-between text-xl ">
-            <div className="truncate pr-4">{title}</div>
-            <ColorTag color={`badge-${badge}`} />
+          <CardTitle>
+            <div className="w-full h-full flex flex-row justify-between">
+              {title}
+              <ColorTag color={`badge-${badge}`} />
+            </div>
           </CardTitle>
           <CardDescription>
             <TooltipProvider>
@@ -166,7 +157,7 @@ export const NoteCard = ({
             <Button
               variant="outline"
               className="p-2 bg-orange-600 hover:bg-orange-700"
-              onClick={handleClick}
+              onClick={handleSummariseClick}
             >
               <BrainIcon />
             </Button>
@@ -181,7 +172,7 @@ export const NoteCard = ({
           <Button
             variant="outline"
             className="p-2 hover:text-orange-500"
-            onClick={() => mutation.mutate({ id })}
+            onClick={() => deleteMutation.mutate({ id })}
           >
             <TrashCanIcon />
           </Button>

@@ -7,13 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
-interface SummaryModalProps {
-  isOpen: boolean;
-  onOpenChange: (open: boolean) => void;
-  title: string;
-  text: string;
-}
+import { SummaryModalProps } from "@/types/types";
 
 export const SummaryModal = ({
   isOpen,

@@ -25,7 +25,7 @@ export default async function AuthButton() {
     <div className="flex items-center gap-4">
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button type="button" variant="outline">
+          <Button type="button" className="select-none" variant="outline">
             Sign out
           </Button>
         </AlertDialogTrigger>
@@ -46,7 +46,7 @@ export default async function AuthButton() {
       </AlertDialog>
     </div>
   ) : (
-    <div className="flex gap-2">
+    <div className="flex gap-2 select-none">
       <Button asChild size="sm" variant={"outline"}>
         <Link href="/sign-in">Sign in</Link>
       </Button>

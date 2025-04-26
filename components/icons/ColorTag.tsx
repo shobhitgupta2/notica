@@ -1,6 +1,4 @@
-interface ColorTagProp {
-  color?: string;
-}
+import { ColorTagProp } from "@/types/types";
 
 export const ColorTag = ({ color }: ColorTagProp) => {
   const cssVarName = color ? `var(--color-${color})` : undefined;

@@ -15,7 +15,9 @@ export const GlowButton = ({
         size="lg"
         asChild
       >
-        <Link href="/home">{children}</Link>
+        <Link className="select-none" href="/home">
+          {children}
+        </Link>
       </Button>
     </div>
   );

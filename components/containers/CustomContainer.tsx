@@ -1,8 +1,18 @@
 import { ColorFilterSelect } from "@/components/input/ColorFilterSelect";
 import { SortSelect } from "@/components/input/SortSelect";
 import { AddNote } from "@/components/modals/AddNote";
+import { LayoutGrid, List } from "lucide-react";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useLayoutState } from "@/hooks/layout";
+import { layout } from "@/types/types";
 
 export const CustomContainer = () => {
+  const { layoutState, setLayoutState } = useLayoutState();
+
+  const handleChange = (value: string) => {
+    setLayoutState(value as layout);
+  };
+
   return (
     <div className="w-full border-b border-b-foreground/10 text-neutral-400">
       {/* for desktop */}
@@ -17,7 +27,22 @@ export const CustomContainer = () => {
             <SortSelect />
           </div>
         </div>
-        <AddNote />
+        <div className="w-fit h-full flex flex-row gap-4 items-center">
+          <ToggleGroup
+            type="single"
+            value={layoutState}
+            onValueChange={handleChange}
+          >
+            <ToggleGroupItem value="grid">
+              <LayoutGrid />
+            </ToggleGroupItem>
+            <ToggleGroupItem value="list">
+              <List />
+            </ToggleGroupItem>
+          </ToggleGroup>
+
+          <AddNote />
+        </div>
       </div>
       {/* for mobile */}
       <div className="sm:hidden p-4 space-y-3">

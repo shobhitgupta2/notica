@@ -6,22 +6,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ColorPicker } from "@/components/input/ColorPicker";
-import { badge_enum } from "@/types/types";
+import { badge_enum, NoteModalProps } from "@/types/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/utils/api-client";
 import { toast } from "sonner";
-
-interface NoteModalProps {
-  isOpen: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-  defaultTitle: string;
-  defaultBadge: badge_enum;
-  id: string;
-}
 
 export const NoteModal = ({
   isOpen,

@@ -6,13 +6,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ColorTag } from "@/components/icons/ColorTag";
-import { badge_enum } from "@/types/types";
-import { Dispatch, SetStateAction } from "react";
-
-interface ColorPickerProps {
-  value: badge_enum;
-  setBadge: Dispatch<SetStateAction<badge_enum>>;
-}
+import { badge_enum, ColorPickerProps } from "@/types/types";
 
 export const ColorPicker = ({ value, setBadge }: ColorPickerProps) => {
   return (
