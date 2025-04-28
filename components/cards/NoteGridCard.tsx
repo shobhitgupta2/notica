@@ -14,7 +14,6 @@ import { ColorTag } from "@/components/icons/ColorTag";
 import { PencilIcon } from "@/components/icons/PencilIcon";
 import { NoteModal } from "@/components/modals/NoteModal";
 import { useState } from "react";
-import { badge_enum } from "@/types/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/utils/api-client";
 import { toast } from "sonner";
@@ -26,6 +25,7 @@ import {
 } from "@/components/ui/tooltip";
 import { SummaryModal } from "@/components/modals/SummaryModal";
 import { NoteCardProps } from "@/types/types";
+import { Separator } from "@/components/ui/separator";
 
 export const NoteGridCard = ({
   title,
@@ -65,7 +65,9 @@ export const NoteGridCard = ({
       }
 
       if (!textToSummarize.trim()) {
-        toast.error("No content to summarize");
+        toast.error(
+          "No content to summarize. Please add at least 30 words to the note",
+        );
         setSummaryOpen(false);
         return;
       }
@@ -76,7 +78,9 @@ export const NoteGridCard = ({
         .filter((word) => word.length > 0).length;
 
       if (wordCount <= 30) {
-        toast.info("Note is too short to summarize");
+        toast.info(
+          `Note is too short to summarize. Please add at least ${30 - wordCount} more words to get summarization`,
+        );
         setSummaryOpen(false);
         return;
       }
@@ -162,6 +166,7 @@ export const NoteGridCard = ({
             >
               <BrainIcon />
             </Button>
+            <Separator orientation="vertical" className="mx-2" />
             <Button
               variant="outline"
               className="p-2 hover:text-orange-500"

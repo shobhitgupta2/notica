@@ -5,6 +5,7 @@ import { LayoutGrid, List } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { useLayoutState } from "@/hooks/layout";
 import { layout } from "@/types/types";
+import { Separator } from "@/components/ui/separator";
 
 export const CustomContainer = () => {
   const { layoutState, setLayoutState } = useLayoutState();
@@ -40,7 +41,7 @@ export const CustomContainer = () => {
               <List />
             </ToggleGroupItem>
           </ToggleGroup>
-
+          <Separator orientation="vertical" className="h-10 mx-2" />
           <AddNote />
         </div>
       </div>

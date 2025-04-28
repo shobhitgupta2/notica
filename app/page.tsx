@@ -1,6 +1,6 @@
 import { GlowButton } from "@/components/buttons/GlowButton";
 import { Card } from "@/components/ui/card";
-import { Badge, Smartphone } from "lucide-react";
+import { Smartphone } from "lucide-react";
 
 export default async function Home() {
   return (
