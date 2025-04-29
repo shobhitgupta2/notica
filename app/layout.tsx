@@ -2,11 +2,12 @@ import HeaderAuth from "@/components/buttons/header-auth";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { Geist } from "next/font/google";
 import { ThemeProvider } from "next-themes";
-import "./fonts/globals.css";
+import "./globals.css";
 import { NoticaLogo } from "@/components/buttons/NoticaLogo";
 import { TanstackProvider } from "@/providers/tanstack-provider";
 import { Toaster } from "sonner";
 import { StateProvider } from "@/providers/state-provider";
+import { Separator } from "@/components/ui/separator";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -39,8 +40,9 @@ export default function RootLayout({
         >
           <nav className="w-full flex justify-between items-center border-b border-b-foreground/10 h-16 gap-4 p-4">
             <NoticaLogo />
-            <div className="h-full flex flex-row gap-2">
+            <div className="h-full flex flex-row gap-2 items-center">
               <ThemeSwitcher />
+              <Separator orientation="vertical" className="mx-2" />
               <HeaderAuth />
             </div>
           </nav>

@@ -1,6 +1,7 @@
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -22,6 +23,12 @@ export const NoteModal = ({
   defaultBadge,
   id,
 }: NoteModalProps) => {
+  const [badge, setBadge] = useState<badge_enum>(defaultBadge);
+  const [title, setTitle] = useState<string>(defaultTitle);
+  const [text, setText] = useState<string>("");
+
+  const wordCount = text?.trim() ? text.trim().split(/\s+/).length : 0;
+
   const queryClient = useQueryClient();
 
   const { data } = useQuery({
@@ -36,13 +43,7 @@ export const NoteModal = ({
     }
   }, [data]);
 
-  const defaultText = data;
-
-  const [badge, setBadge] = useState<badge_enum>(defaultBadge);
-  const [title, setTitle] = useState<string>(defaultTitle);
-  const [text, setText] = useState<string>(defaultText);
-
-  const mutation = useMutation({
+  const saveMutation = useMutation({
     mutationFn: (data: {
       id: string;
       title: string;
@@ -123,7 +124,7 @@ export const NoteModal = ({
   return (
     <Dialog open={isOpen} onOpenChange={setOpen}>
       <DialogContent className="max-w-3xl w-full overflow-hidden flex flex-col">
-        <DialogHeader className="p-4 shrink-0">
+        <DialogHeader className="p-4 shrink-0 flex gap-4">
           <DialogTitle>
             <Input
               required
@@ -133,7 +134,8 @@ export const NoteModal = ({
             />
           </DialogTitle>
         </DialogHeader>
-        <div className="overflow-y-auto flex-1 p-1">
+        <div className="overflow-y-auto flex-1 p-1 gap-4 flex-col flex">
+          <DialogDescription>Word Count: {wordCount}</DialogDescription>
           <Textarea
             value={text || ""}
             className="resize-none w-full h-48 md:h-64 lg:h-80"
@@ -146,7 +148,7 @@ export const NoteModal = ({
             <Button
               type="button"
               variant="outline"
-              onClick={() => mutation.mutate({ id, title, badge, text })}
+              onClick={() => saveMutation.mutate({ id, title, badge, text })}
             >
               Save
             </Button>

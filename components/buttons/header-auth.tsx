@@ -34,13 +34,15 @@ export default async function AuthButton() {
             <AlertDialogTitle>Confirm Sign Out?</AlertDialogTitle>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={signOutAction}
-              className="bg-orange-600 text-white hover:bg-orange-700"
-            >
-              Confirm
-            </AlertDialogAction>
+            <div className="flex flex-row gap-4 w-full h-full justify-end">
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={signOutAction}
+                className="bg-orange-600 text-white hover:bg-orange-700"
+              >
+                Confirm
+              </AlertDialogAction>
+            </div>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

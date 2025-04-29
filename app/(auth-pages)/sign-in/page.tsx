@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import GoogleSignInButton from "@/components/buttons/GoogleSignInButton";
+import { Separator } from "@/components/ui/separator";
 
 export default async function Login(props: { searchParams: Promise<Message> }) {
   const searchParams = await props.searchParams;
@@ -38,6 +39,17 @@ export default async function Login(props: { searchParams: Promise<Message> }) {
         <SubmitButton pendingText="Signing In..." formAction={signInAction}>
           Sign in
         </SubmitButton>
+        <div className="flex flex-row w-full justify-center items-center gap-4">
+          <Separator
+            orientation="horizontal"
+            className="my-4 w-1/3 flex-grow"
+          />
+          Or
+          <Separator
+            orientation="horizontal"
+            className="my-4 w-1/3 flex-grow"
+          />
+        </div>
         <GoogleSignInButton />
         <FormMessage message={searchParams} />
       </div>

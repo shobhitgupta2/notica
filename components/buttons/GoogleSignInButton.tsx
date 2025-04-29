@@ -8,13 +8,13 @@ export default function GoogleSignInButton() {
     <Button
       type="button"
       variant="outline"
-      className="w-full gap-2"
+      className="w-full gap-2 py-5"
       onClick={() => {
         signInWithGoogle();
       }}
     >
       <GoogleLogo />
-      Sign In with Google
+      Continue with Google
     </Button>
   );
 }
