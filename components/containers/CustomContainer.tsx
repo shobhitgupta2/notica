@@ -11,7 +11,9 @@ export const CustomContainer = () => {
   const { layoutState, setLayoutState } = useLayoutState();
 
   const handleChange = (value: string) => {
-    setLayoutState(value as layout);
+    if (value) {
+      setLayoutState(value as layout);
+    }
   };
 
   return (
@@ -32,6 +34,7 @@ export const CustomContainer = () => {
           <ToggleGroup
             type="single"
             value={layoutState}
+            variant="outline"
             onValueChange={handleChange}
           >
             <ToggleGroupItem value="grid">
